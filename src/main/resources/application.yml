@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: shop
+  datasource:
+    url: jdbc:mysql://localhost:3306/isd_shop?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: ISD_shop
+    password: ISD_shop
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8686
+jwt:
+  expiration: 2592000 #30 days = 30 * 24 * 60 * 60
+  secretKey: TaqlmGv1iEDMRiFp/pHuID1+T84IABfuA0xXh4GhiUI=
