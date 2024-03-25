@@ -6,18 +6,18 @@
 - request body:
 
 ```json
-{
-  "first_name": "John",
-  "last_name": "Doe",
+      {
+  "full_name": "John Doe",
   "email": "john@gmail.com",
-  "address": "123, Main Street, New York",
+  "phone_number": "0396911111",
   "password": "password",
-  "retype_password": "password",
-  "date_of_birth": "1990-01-01",
+  "gender":"mail",
   "role_id": 4
 }
 
 ```
+- response:
+  User created successfully
 
 ## [POST] login for customer
 - url: localhost:8686/login
@@ -25,8 +25,7 @@
 
 ```json
 {
-    "email":"john@gmail.com",
-     "password": "passwordd",
-    "role_id": 4
+  "username":"0396911111",
+  "password": "password"
 }
 ```
