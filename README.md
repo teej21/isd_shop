@@ -40,3 +40,6 @@
   "full_name" : "John Doe"
   }
   ```
+- response when invalid:
+  - Password is incorrect
+  - Email or phone number is incorrect

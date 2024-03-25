@@ -15,12 +15,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests( request ->{
+                .authorizeHttpRequests(request -> {
                     request.requestMatchers("/**")
                             .permitAll();
                 });
-
         return http.build();
     }
+
 }
