@@ -1,45 +1,49 @@
-# APIs
+# Meta data
 
-## [POST] register for customer
+- host: localhost:8686/
+- database:
+    - username: ISD_shop
+    - password: ISD_shop
+    - name: isd_shop
 
-- url: localhost:8686/register
-- request body:
+---
 
-```json
-      {
-  "full_name": "John Doe",
-  "email": "john@gmail.com",
-  "phone_number": "0396911111",
-  "password": "password",
-  "gender": "mail",
-  "role_id": 4
-}
+# Sprint 1
 
-```
+## Common Response
 
-- response:
-  User created successfully
+### Error Result REsponse
 
-## [POST] login for customer
-
-- url: localhost:8686/login
-- request body:
-
-```json
-{
-  "username": "0396911111",
-  "password": "password"
-}
-```
-
-- response:
   ```json
   {
-  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpvaG5AZ21haWwuY29tIiwic3ViIjoiam9obkBnbWFpbC5jb20iLCJleHAiOjE3MTM5NDAxMTF9.WQAXFt9jiaPmWofBQ3_dQjLjviRRr1ilAYbBLCziWLk",
-  "role_id" : 4,
-  "full_name" : "John Doe"
+  "error": "{error message}"
+}
+  ```
+
+## API
+
+### 1. Register for a new customer
+
+#### Request
+
+- Method: **POST**
+- URL: ```/register```
+- Body:
+  ```json
+  {
+  "full_name": "{fullname}",
+  "email": "{email}",
+  "phone_number": "{phone_number}",
+  "password": "{password}",
+  "gender": "{gender}",
+  "role": "{role}"
   }
   ```
-- response when invalid:
-  - Password is incorrect
-  - Email or phone number is incorrect
+
+#### Response
+- if success:
+  ```json
+  {
+  "message": "Register successfully"
+  }
+  ```

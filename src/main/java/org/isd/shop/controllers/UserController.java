@@ -1,17 +1,14 @@
 package org.isd.shop.controllers;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.isd.shop.dtos.UseRegisterDTO;
-import org.isd.shop.dtos.UserLoginDTO;
-import org.isd.shop.dtos.UserLoginResponseDTO;
+import org.isd.shop.dtos.UserDTO;
+import org.isd.shop.responses.common.ErrorResultResponse;
+import org.isd.shop.responses.user.UserSignupResponse;
 import org.isd.shop.services.IUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,41 +19,68 @@ public class UserController {
     private final IUserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(
-            @Valid @RequestBody UseRegisterDTO userDTO,
-            BindingResult result
+    public ResponseEntity<?> registerNewCustomer(
+            @RequestBody UserDTO userDTO,
+            BindingResult bindingResult
     ) {
         try {
-            if (result.hasErrors()) {
-                List<String> errorMessages = result.getFieldErrors()
-                        .stream()
-                        .map(FieldError::getDefaultMessage)
-                        .toList();
-                return ResponseEntity.badRequest().body(errorMessages);
+            if (bindingResult.hasErrors()) {
+                throw new Exception("Invalid data");
             }
-            userService.createUser(userDTO);
-            return ResponseEntity.ok("User created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            String fullName = userDTO.getFullName();
+            String email = userDTO.getEmail();
+            String phoneNumber = userDTO.getPhoneNumber();
+            String password = userDTO.getPassword();
+            String gender = userDTO.getGender();
+            String role = userDTO.getRole();
 
+            if (isValidString(List.of(fullName, email, phoneNumber, password, gender, role))) {
+                throw new Exception("Invalid data");
+            }
+
+            return ResponseEntity.ok(userService.registerNewCustomer(
+                    fullName,
+                    email,
+                    phoneNumber,
+                    password,
+                    gender,
+                    role
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ErrorResultResponse(e.getMessage()));
         }
     }
 
 
     @PostMapping("/login")
     public ResponseEntity<?> login(
-            @Valid @RequestBody UserLoginDTO userLoginDTO
+            @RequestBody UserDTO userDTO,
+            BindingResult bindingResult
     ) {
         try {
+            if (bindingResult.hasErrors()) {
+                throw new Exception("Invalid data");
+            }
 
-            UserLoginResponseDTO userLoginResponseDTO = userService.login(userLoginDTO);
-//            add userLoginResponseDTO to response body
-            return ResponseEntity.ok(userLoginResponseDTO);
-
+            String username = userDTO.getUsername();
+            String password = userDTO.getPassword();
+            String role = userDTO.getRole();
+            if (isValidString(List.of(username, password, role))) {
+                throw new Exception("Invalid data");
+            }
+            return ResponseEntity.ok(userService.login(username, password, role));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(new ErrorResultResponse(e.getMessage()));
         }
     }
 
-
+    /**
+     * check if any string is null or empty
+     *
+     * @param str
+     * @return
+     */
+    private boolean isValidString(List<String> str) {
+        return str.stream().anyMatch(s -> s == null || s.isEmpty());
+    }
 }

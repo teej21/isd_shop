@@ -3,6 +3,7 @@ package org.isd.shop.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.isd.shop.enums.Enums;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseEntity implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,7 +34,8 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phoneNumber;
     @Column(name = "gender", nullable = false, length = 10)
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Enums.Gender gender;
 
     @Column(name = "password", length = 200, nullable = false)
     private String password;
@@ -45,19 +47,19 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
+
     @Column(name = "address", length = 200)
     private String address;
 
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Enums.Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + getRole().getName()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toString()));
         return authorities;
     }
 
@@ -65,7 +67,6 @@ public class User extends BaseEntity implements UserDetails {
     public String getUsername() {
         return email;
     }
-
 
 
     @Override

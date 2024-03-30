@@ -5,12 +5,20 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.isd.shop.entities.Token;
 import org.isd.shop.entities.User;
+import org.isd.shop.repositories.TokenRepository;
+import org.isd.shop.responses.user.RefreshTokenResponse;
+import org.isd.shop.responses.user.UserLoginResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,50 +26,83 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
+@Getter
+@Setter
 public class JwtTokenUtil {
-    @Value("${jwt.expiration}")
-    private int expiration;
+    @Value("${jwt.accessTokenExpiration}")
+    private int accessTokenExpiration;
 
     @Value("${jwt.secretKey}")
     private String secretKey;
 
-    public String generateToken(User user) {
-//        properties set into token -> claims
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("email", user.getEmail());
-        try {
-            return Jwts.builder()
-                    .setClaims(claims)
-                    .setSubject(user.getEmail())
-                    .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000L))
-                    .signWith(getSignKey(), SignatureAlgorithm.HS256)
-                    .compact();
-        } catch (Exception e) {
-            System.out.println("Cannot generate token, error: " + e.getMessage());
-            return null;
-        }
+    @Value("${jwt.refreshTokenExpiration}")
+    private int refreshTokenExpiration;
+
+    private final TokenRepository tokenRepository;
+
+    public String generateAccessToken(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration * 1000L))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
-    private Key getSignKey() {
-        byte[] secretBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(secretBytes);
+    public String generateRefreshToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[64]; // 512-bit token
+        random.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 
-    private Claims extractAllClaims(String token){
+    public Key getSignKey() {
+        return Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
+
+    public String extractUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()
-                .parseClaimsJwt(token)
-                .getBody();
-    }
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
-        final Claims claims = this.extractAllClaims(token);
-        return claimsResolver.apply(claims);
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
-    public boolean isTokenExpired(String token){
-        Date expirationDate = this.extractClaim(token, Claims::getExpiration);
-        return expirationDate.before(new Date());
+    public boolean isValidAccessToken(String token, String username) {
+
+        return extractUsername(token).equals(username) && !isAccessTokenExpired(token);
     }
+
+    public boolean isAccessTokenExpired(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration()
+                .before(new Date());
+    }
+
+    public boolean isRefreshTokenExpired(Date expiration) {
+        return expiration.before(new Date());
+    }
+
+    public RefreshTokenResponse generateTokens(String username) {
+        String accessToken = generateAccessToken(username);
+        String refreshTokenString = generateRefreshToken();
+        Date refreshTokenExpiration = new Date(System.currentTimeMillis() + getRefreshTokenExpiration() * 1000L);
+        Date accessTokenExpiration = new Date(System.currentTimeMillis() + getAccessTokenExpiration() * 1000L);
+        Token token = Token.builder()
+                .refreshToken(refreshTokenString)
+                .accessToken(accessToken)
+                .refreshTokenExpiryDate(refreshTokenExpiration)
+                .accessTokenExpiryDate(accessTokenExpiration)
+                .build();
+        tokenRepository.save(token);
+        return RefreshTokenResponse.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshTokenString).build();
+    }
+
 }
 
