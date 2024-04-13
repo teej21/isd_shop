@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
 import java.nio.file.Paths;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class ProductController {
     @GetMapping("/images/{imageName}")
     public ResponseEntity<?> viewImage(@PathVariable String imageName) {
         try {
-            java.nio.file.Path imagePath = Paths.get("uploads/"+imageName);
+            java.nio.file.Path imagePath = Paths.get("uploads/" + imageName);
             UrlResource resource = new UrlResource(imagePath.toUri());
 
             if (resource.exists()) {
@@ -86,9 +87,18 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/category={id}")
+    private ResponseEntity<?> getProductsByCategory(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(productService.getProductsByCategory(id));
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO, BindingResult result) {
+    private ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductDTO
+            productDTO, BindingResult result) {
         if (result.hasErrors()) {
             List<String> errorMessages = result.getFieldErrors()
                     .stream()
@@ -124,7 +134,6 @@ public class ProductController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 
 
 }

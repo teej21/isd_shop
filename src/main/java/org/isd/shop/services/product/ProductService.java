@@ -108,6 +108,16 @@ public class ProductService implements IProductService {
         productRepository.delete(product.get());
     }
 
+    @Override
+    public List<Product> getProductsByCategory(Long id) {
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isEmpty()) {
+            throw new RuntimeException("Không Tìm Thấy Danh Mục");
+        }
+        Optional<List<Product>> products = Optional.of(productRepository.findByCategoryId(id));
+        return products.get();
+    }
+
     private String updateImageByName(MultipartFile image, String oldImageName) throws IOException {
         String newImageName = uploadImage(image);
         Path oldImage = Paths.get("uploads").resolve(oldImageName);
