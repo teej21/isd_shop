@@ -45,5 +45,5 @@
   ```json
   {
   "message": "Register successfully"
-  }
+  }••••••••••
   ```

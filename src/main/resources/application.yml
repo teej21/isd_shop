@@ -5,6 +5,11 @@ spring:
     url: jdbc:mysql://localhost:3306/isd_shop?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: ISD_shop
     password: ISD_shop
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
   jpa:
     hibernate:
       ddl-auto: update

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Builder
-public class UserLoginResponse  {
+public class UserLoginResponse {
 
 
     @JsonProperty("full_name")
@@ -14,4 +14,7 @@ public class UserLoginResponse  {
 
     @JsonProperty("tokens")
     private RefreshTokenResponse tokens;
+
+    @JsonProperty("role")
+    private String role;
 }

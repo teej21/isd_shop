@@ -25,4 +25,16 @@ public class Enums {
         }
     }
 
+
+    public  enum OrderStatus {
+        PENDING("PENDING"),
+        SHIPPED("SHIPPING"),
+        DELIVERED("DELIVERED"),
+        CANCELLED("CANCELLED");
+
+        OrderStatus(String status) {
+
+        }
+    }
+
 }
