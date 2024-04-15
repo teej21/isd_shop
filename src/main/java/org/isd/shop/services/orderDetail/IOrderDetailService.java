@@ -8,4 +8,9 @@ public interface IOrderDetailService {
     List<Order> getAllOrders();
 
     Order getOrderById(Long id);
+
+    Order createOrder(Long userId);
+
+    List<Order> getOrderByUserId(Long userId);
+
 }

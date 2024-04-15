@@ -20,13 +20,15 @@ public class Enums {
         Gender(String gender) {
 
         }
+
         public String getGender() {
             return this.toString();
         }
     }
 
 
-    public  enum OrderStatus {
+    public enum OrderStatus {
+        INIT("INIT"),
         PENDING("PENDING"),
         SHIPPED("SHIPPING"),
         DELIVERED("DELIVERED"),

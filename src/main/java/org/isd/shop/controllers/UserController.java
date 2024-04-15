@@ -41,6 +41,7 @@ public class UserController {
     }
 
 
+
     @PostMapping("/register")
     public ResponseEntity<?> registerNewCustomer(
             @RequestBody UserDTO userDTO,
@@ -77,6 +78,16 @@ public class UserController {
     public ResponseEntity<?> getAllUsers() {
         try {
             return ResponseEntity.ok().body(userService.getAllUsers());
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
+
+
+    @GetMapping("admin/users/role={role}")
+    public ResponseEntity<?> getUsersByRole(@PathVariable String role) {
+        try {
+            return ResponseEntity.ok().body(userService.getUsersByRole(role));
         } catch (Exception e) {
             return utils.ErrorResponse(e);
         }

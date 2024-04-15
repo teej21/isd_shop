@@ -23,4 +23,6 @@ public interface IUserService {
     User updateUserById(Long id, String fullName, String email, String phoneNumber, String password, String gender, String role, boolean active, Date dateOfBirth, String address);
 
     ResultResponse deleteUserById(Long id);
+
+    List<UserResponse> getUsersByRole(String role);
 }

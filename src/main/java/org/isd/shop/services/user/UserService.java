@@ -145,6 +145,16 @@ public class UserService implements IUserService {
         return new ResultResponse("Xóa người dùng thành công");
     }
 
+    @Override
+    public List<UserResponse> getUsersByRole(String role) {
+        if (!utils.isValidRole(role)) {
+            throw new RuntimeException("Vai trò không hợp lệ");
+        }
+        Optional<List<User>> users = userRepository.findByRole(Enums.Role.valueOf(role.toUpperCase()));
+
+        return users.get().stream().map(UserResponse::fromUser).toList();
+    }
+
     private void validateUser(
             String role,
             String gender,
