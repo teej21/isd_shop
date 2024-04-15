@@ -13,8 +13,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.rmi.server.UID;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -135,7 +137,7 @@ public class ProductService implements IProductService {
             throw new RuntimeException("File không phải là ảnh");
         }
 //        change name to unique
-        String newUniqueName = "image" + System.currentTimeMillis() + image.getOriginalFilename();
+        String newUniqueName = UUID.randomUUID().toString() + System.currentTimeMillis() + image.getOriginalFilename();
 
         // save image to server
         Path uploadDir = Paths.get("uploads");
@@ -144,7 +146,6 @@ public class ProductService implements IProductService {
         }
         Path newFileDestination = uploadDir.resolve(newUniqueName);
         Files.copy(image.getInputStream(), newFileDestination, StandardCopyOption.REPLACE_EXISTING);
-
         return newUniqueName;
     }
 }

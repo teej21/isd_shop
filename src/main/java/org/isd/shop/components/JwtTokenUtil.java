@@ -69,7 +69,6 @@ public class JwtTokenUtil {
     }
 
     public boolean isValidAccessToken(String token, String username) {
-
         return extractUsername(token).equals(username) && !isAccessTokenExpired(token);
     }
 
@@ -100,8 +99,8 @@ public class JwtTokenUtil {
                 .build();
         tokenRepository.save(token);
         return RefreshTokenResponse.builder()
-                    .accessToken(accessToken)
-                    .refreshToken(refreshTokenString).build();
+                .accessToken(accessToken)
+                .refreshToken(refreshTokenString).build();
     }
 
 }

@@ -71,7 +71,15 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserSignupResponse registerNewUser(String fullName, String email, String phoneNumber, String password, String gender, String role) throws Exception {
+    public UserSignupResponse registerNewUser(String fullName,
+                                              String email,
+                                              String phoneNumber,
+                                              String password,
+                                              String gender,
+                                              String role,
+                                              String address,
+                                              Date dateOfBirth
+    ) throws Exception {
         try {
             validateUser(role, gender, email, phoneNumber);
             //          register for customer
@@ -82,6 +90,8 @@ public class UserService implements IUserService {
                     .password(passwordEncoder.encode(password))
                     .gender(Enums.Gender.valueOf(gender.toUpperCase()))
                     .role(Enums.Role.valueOf(role.toUpperCase()))
+                    .dateOfBirth(dateOfBirth)
+                    .address(address)
                     .build();
 
             userRepository.save(user);
@@ -143,6 +153,21 @@ public class UserService implements IUserService {
         }
         userRepository.deleteById(id);
         return new ResultResponse("Xóa người dùng thành công");
+    }
+
+    @Override
+    public List<UserResponse> getUsersByRole(String role) {
+        if (!utils.isValidRole(role)) {
+            throw new RuntimeException("Vai trò không hợp lệ");
+        }
+        Optional<List<User>> users = userRepository.findByRole(Enums.Role.valueOf(role.toUpperCase()));
+
+        return users.get().stream().map(UserResponse::fromUser).toList();
+    }
+
+    @Override
+    public boolean checkUserExist(Long userId) {
+        return userRepository.existsById(userId);
     }
 
     private void validateUser(

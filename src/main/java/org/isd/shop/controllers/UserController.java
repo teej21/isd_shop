@@ -33,12 +33,15 @@ public class UserController {
                     userDTO.getPhoneNumber(),
                     userDTO.getPassword(),
                     userDTO.getGender(),
-                    userDTO.getRole()
+                    userDTO.getRole(),
+                    userDTO.getAddress(),
+                    userDTO.getDateOfBirth()
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ErrorResultResponse(e.getMessage()));
         }
     }
+
 
 
     @PostMapping("/register")
@@ -77,6 +80,16 @@ public class UserController {
     public ResponseEntity<?> getAllUsers() {
         try {
             return ResponseEntity.ok().body(userService.getAllUsers());
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
+
+
+    @GetMapping("admin/users/role={role}")
+    public ResponseEntity<?> getUsersByRole(@PathVariable String role) {
+        try {
+            return ResponseEntity.ok().body(userService.getUsersByRole(role));
         } catch (Exception e) {
             return utils.ErrorResponse(e);
         }

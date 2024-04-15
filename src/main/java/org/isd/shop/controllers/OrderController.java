@@ -3,20 +3,28 @@ package org.isd.shop.controllers;
 import lombok.RequiredArgsConstructor;
 import org.isd.shop.components.Utils;
 import org.isd.shop.responses.common.ErrorResultResponse;
+import org.isd.shop.services.order.IOrderService;
 import org.isd.shop.services.orderDetail.IOrderDetailService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final IOrderDetailService orderService;
+    private final IOrderService orderService;
     private final Utils utils;
+
+    @PostMapping("/{userId}")
+    public ResponseEntity<?> createOrder(@PathVariable Long userId) {
+        try {
+            return ResponseEntity.ok(orderService.createOrder(userId));
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
+
     @GetMapping("")
     public ResponseEntity<?> getAllOrders() {
         try {
@@ -30,6 +38,23 @@ public class OrderController {
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(orderService.getOrderById(id));
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getOrderByUserId(@PathVariable Long userId) {
+        try {
+            return ResponseEntity.ok(orderService.getOrderByUserId(userId));
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
+    @GetMapping("status={status}")
+    public ResponseEntity<?> getOrderByStatus(@PathVariable String status) {
+        try {
+            return ResponseEntity.ok(orderService.getOrderByStatus(status));
         } catch (Exception e) {
             return utils.ErrorResponse(e);
         }
