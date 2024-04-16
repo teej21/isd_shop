@@ -14,13 +14,26 @@ public interface IUserService {
 
     UserLoginResponse login(String username, String password, String role) throws Exception;
 
-    UserSignupResponse registerNewUser(String fullName, String email, String phoneNumber, String password, String gender, String role)throws Exception;
 
     List<UserResponse> getAllUsers();
 
     UserResponse getUserById(Long id);
 
-    User updateUserById(Long id, String fullName, String email, String phoneNumber, String password, String gender, String role, boolean active, Date dateOfBirth, String address);
+    UserSignupResponse registerNewUser(String fullName,
+                                       String email,
+                                       String phoneNumber,
+                                       String password,
+                                       String gender,
+                                       String role,
+                                       String address,
+                                       Date dateOfBirth
+    ) throws Exception;
 
     ResultResponse deleteUserById(Long id);
+
+    boolean checkUserExist(Long userId);
+
+    User updateUserById(Long id, String fullName, String email, String phoneNumber, String password, String gender, String role, boolean active, Date dateOfBirth, String address);
+
+    List<UserResponse> getUsersByRole(String role);
 }

@@ -27,7 +27,6 @@ import java.util.Optional;
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
@@ -69,6 +68,8 @@ public class UserService implements IUserService {
 
         }
     }
+
+
 
     @Override
     public UserSignupResponse registerNewUser(String fullName,

@@ -25,27 +25,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderDetailService implements IOrderDetailService {
     private final OrderDetailReposity orderDetailRepository;
-    private final UserRepository userRepository;
     private final IOrderService orderService;
     private final IProductService productService;
     private final IUserService userService;
 
-
-    @Override
-    public List<OrderDetailResponse> getOrderDetailsByOrderId(Long orderId) {
-        Order order = orderService.getOrderById(orderId);
-        Optional<List<OrderDetail>> orderDetails = Optional.of(orderDetailRepository.findByOrder(order));
-        return orderDetails.get().stream().map(OrderDetailResponse::fromOrderDetail).toList();
-    }
-
-    @Override
-    public OrderDetailResponse getOrderDetailById(Long id) {
-        Optional<OrderDetail> orderDetail = orderDetailRepository.findById(id);
-        if (orderDetail.isEmpty()) {
-            throw new RuntimeException("Không Tìm Thấy Chi Tiết Đơn Hàng");
-        }
-        return OrderDetailResponse.fromOrderDetail(orderDetail.get());
-    }
 
     @Override
     public OrderDetailResponse createOrderDetail(Long userId, Long productId) {
@@ -61,6 +44,19 @@ public class OrderDetailService implements IOrderDetailService {
                 .build();
 
         return OrderDetailResponse.fromOrderDetail(orderDetailRepository.save(orderDetail));
+    }
+
+    @Override
+    public OrderDetailResponse getOrderDetailById(Long id) {
+        OrderDetail orderDetail = orderDetailRepository.findById(id).orElseThrow(() -> new RuntimeException("Không Tìm Thấy Order Detail"));
+        return OrderDetailResponse.fromOrderDetail(orderDetail);
+    }
+
+    @Override
+    public List<OrderDetailResponse> getOrderDetailsByOrderId(Long orderId) {
+        Order order = orderService.getOrderById(orderId);
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
+        return orderDetails.stream().map(OrderDetailResponse::fromOrderDetail).toList();
     }
 
 

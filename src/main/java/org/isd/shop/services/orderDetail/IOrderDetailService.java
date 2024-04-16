@@ -1,11 +1,15 @@
 package org.isd.shop.services.orderDetail;
 
 import org.isd.shop.entities.Order;
+import org.isd.shop.responses.OrderDetail.OrderDetailResponse;
 
 import java.util.List;
 
 public interface IOrderDetailService {
-    List<Order> getAllOrders();
 
-    Order getOrderById(Long id);
+    OrderDetailResponse createOrderDetail(Long userId, Long productId);
+
+    OrderDetailResponse getOrderDetailById(Long id);
+
+    List<OrderDetailResponse> getOrderDetailsByOrderId(Long orderId);
 }
