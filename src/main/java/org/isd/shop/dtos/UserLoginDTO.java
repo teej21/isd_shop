@@ -19,9 +19,5 @@ public class UserLoginDTO {
     @JsonProperty("password")
     private String password;
 
-    @NotEmpty(message = "Vai trò không được để trống")
-    @JsonProperty("role")
-    private String role;
-
 
 }

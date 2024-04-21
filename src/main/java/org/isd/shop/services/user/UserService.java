@@ -34,11 +34,9 @@ public class UserService implements IUserService {
 
 
     @Override
-    public UserLoginResponse login(String username, String password, String role) throws Exception {
+    public UserLoginResponse login(String username, String password) throws Exception {
         try {
-            if (!utils.isValidRole(role)) {
-                throw new Exception("Not found role " + role);
-            }
+
             boolean isEmail = utils.isValidEmail(username);
             boolean isPhoneNumber = utils.isValidPhoneNumber(username);
             if (!isEmail && !isPhoneNumber) {
@@ -70,7 +68,6 @@ public class UserService implements IUserService {
     }
 
 
-
     @Override
     public UserSignupResponse registerNewUser(String fullName,
                                               String email,
@@ -83,6 +80,14 @@ public class UserService implements IUserService {
     ) throws Exception {
         try {
             validateUser(role, gender, email, phoneNumber);
+            Optional<User> userOptional = userRepository.findByEmail(email);
+            if (userOptional.isPresent()) {
+                throw new Exception("Email đã được sử dụng để đăng ký. Vui lòng sử dụng email khác.");
+            }
+            Optional<User> userOptional1 = userRepository.findByPhoneNumber(phoneNumber);
+            if (userOptional1.isPresent()) {
+                throw new Exception("Số điện thoại đã được sử dụng để đăng ký. Vui lòng sử dụng số điện thoại khác.");
+            }
             //          register for customer
             User user = User.builder()
                     .fullName(fullName)
@@ -193,14 +198,7 @@ public class UserService implements IUserService {
             throw new Exception("Số điện thoại không hợp lệ");
         }
 
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isPresent()) {
-            throw new Exception("Email đã được sử dụng để đăng ký. Vui lòng sử dụng email khác.");
-        }
-        Optional<User> userOptional1 = userRepository.findByPhoneNumber(phoneNumber);
-        if (userOptional1.isPresent()) {
-            throw new Exception("Số điện thoại đã được sử dụng để đăng ký. Vui lòng sử dụng số điện thoại khác.");
-        }
+
     }
 }
 

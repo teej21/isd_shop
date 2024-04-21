@@ -3,6 +3,7 @@ package org.isd.shop.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.isd.shop.enums.Enums;
 
 @Entity
 @Table(name = "products")
@@ -38,6 +39,10 @@ public class Product {
 
     @Column(name = "width")
     private double width;
+
+    @Column(name = "status", columnDefinition = "varchar(50) default 'AVAILABLE'")
+    @Enumerated(EnumType.STRING)
+    private Enums.ProductStatus status;
 
     @Column(name = "height")
     private double height;

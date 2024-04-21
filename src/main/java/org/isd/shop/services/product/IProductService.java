@@ -14,7 +14,17 @@ public interface IProductService {
 
     Product addProduct(String name, String description, double price, Long categoryId, double width, double height, String material, int publishYear, MultipartFile thumbnailImage);
 
-    Product updateProduct(Long id, String name, String description, double price, Long categoryId, double width, double height, String material, int publishYear, MultipartFile thumbnailImage);
+    public Product updateProduct(Long id,
+                                 String name,
+                                 String description,
+                                 double price,
+                                 Long categoryId,
+                                 double width,
+                                 double height,
+                                 String material,
+                                 int publishYear,
+                                 MultipartFile thumbnailImage,
+                                 String status);
 
     void deleteProduct(Long id);
 

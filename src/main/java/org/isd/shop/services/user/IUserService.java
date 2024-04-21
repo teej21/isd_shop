@@ -12,7 +12,7 @@ import java.util.List;
 public interface IUserService {
 
 
-    UserLoginResponse login(String username, String password, String role) throws Exception;
+    UserLoginResponse login(String username, String password) throws Exception;
 
 
     List<UserResponse> getAllUsers();

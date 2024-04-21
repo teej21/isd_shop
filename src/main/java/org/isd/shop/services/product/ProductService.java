@@ -3,6 +3,7 @@ package org.isd.shop.services.product;
 import lombok.RequiredArgsConstructor;
 import org.isd.shop.entities.Category;
 import org.isd.shop.entities.Product;
+import org.isd.shop.enums.Enums;
 import org.isd.shop.repositories.CategoryRepository;
 import org.isd.shop.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,17 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, String name, String description, double price, Long categoryId, double width, double height, String material, int publishYear, MultipartFile thumbnailImage) {
+    public Product updateProduct(Long id,
+                                 String name,
+                                 String description,
+                                 double price,
+                                 Long categoryId,
+                                 double width,
+                                 double height,
+                                 String material,
+                                 int publishYear,
+                                 MultipartFile thumbnailImage,
+                                 String status) {
         Optional<Product> product = productRepository.findById(id);
         if (product.isEmpty()) {
             throw new RuntimeException("Không Tìm Thấy Sản Phẩm");
@@ -97,7 +108,7 @@ public class ProductService implements IProductService {
         productToUpdate.setWidth(width);
         productToUpdate.setMaterial(material);
         productToUpdate.setPublishYear(publishYear);
-
+        productToUpdate.setStatus(Enums.ProductStatus.valueOf(status));
         return productRepository.save(productToUpdate);
     }
 

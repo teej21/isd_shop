@@ -1,5 +1,6 @@
 package org.isd.shop.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.isd.shop.enums.Enums;
@@ -29,6 +30,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "caring_employee_id")
+    private User caringEmployee;
 
     @Column(name = "status", columnDefinition = "varchar(255) default 'INIT'")
     @Enumerated(EnumType.STRING)

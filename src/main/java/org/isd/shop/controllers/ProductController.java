@@ -97,7 +97,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductDTO
+    private ResponseEntity<?> updateProduct(@PathVariable Long id, @ModelAttribute @Valid ProductDTO
             productDTO, BindingResult result) {
         if (result.hasErrors()) {
             List<String> errorMessages = result.getFieldErrors()
@@ -118,7 +118,8 @@ public class ProductController {
                     productDTO.getHeight(),
                     productDTO.getMaterial(),
                     productDTO.getPublishYear(),
-                    productDTO.getThumbnailImage()
+                    productDTO.getThumbnailImage(),
+                    productDTO.getStatus()
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -129,9 +130,9 @@ public class ProductController {
     private ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
-            return ResponseEntity.ok("Xóa Sản Phẩm Thành Công");
+            return utils.ResultResponse("Xóa sản phẩm thành công");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return utils.ErrorResponse(e);
         }
     }
 

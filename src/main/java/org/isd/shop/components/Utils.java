@@ -3,6 +3,7 @@ package org.isd.shop.components;
 import lombok.RequiredArgsConstructor;
 import org.isd.shop.enums.Enums;
 import org.isd.shop.responses.common.ErrorResultResponse;
+import org.isd.shop.responses.common.ResultResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -50,5 +51,9 @@ public class Utils {
 
     public ResponseEntity<ErrorResultResponse>  ErrorResponse(Exception e) {
         return ResponseEntity.badRequest().body(new ErrorResultResponse(e.getMessage()));
+    }
+
+    public  ResponseEntity<ResultResponse> ResultResponse(String result) {
+        return ResponseEntity.ok().body(new ResultResponse(result));
     }
 }

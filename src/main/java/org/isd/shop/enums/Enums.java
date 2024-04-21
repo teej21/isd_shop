@@ -12,6 +12,18 @@ public class Enums {
         }
     }
 
+    public enum ProductStatus {
+        AVAILABLE("AVAILABLE"),
+        STOCKOUT("STOCKOUT"),
+        ORDERED("ORDERED");
+
+        ProductStatus(String status) {
+
+        }
+
+
+    }
+
     public enum Gender {
         MALE("male"),
         FEMALE("female"),

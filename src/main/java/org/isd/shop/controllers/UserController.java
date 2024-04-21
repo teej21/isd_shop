@@ -67,8 +67,7 @@ public class UserController {
             }
             return ResponseEntity.ok(userService.login(
                     userLoginDTO.getUsername(),
-                    userLoginDTO.getPassword(),
-                    userLoginDTO.getRole()
+                    userLoginDTO.getPassword()
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ErrorResultResponse(e.getMessage()));

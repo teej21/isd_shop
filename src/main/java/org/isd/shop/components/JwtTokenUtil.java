@@ -40,9 +40,9 @@ public class JwtTokenUtil {
 
     private final TokenRepository tokenRepository;
 
-    public String generateAccessToken(String username) {
+    public String generateAccessToken(String email) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration * 1000L))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
@@ -102,6 +102,16 @@ public class JwtTokenUtil {
                 .accessToken(accessToken)
                 .refreshToken(refreshTokenString).build();
     }
+
+    public String extractEmail(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
 
 }
 

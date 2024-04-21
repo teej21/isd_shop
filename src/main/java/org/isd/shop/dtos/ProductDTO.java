@@ -25,7 +25,7 @@ public class ProductDTO {
     public Double price;
 
 
-    @NotNull(message = "Ảnh sản phẩm không được để trống")
+
     private MultipartFile thumbnailImage;
 
 
@@ -49,5 +49,8 @@ public class ProductDTO {
 
     @NotNull(message = "Năm sản xuất không được để trống")
     public Integer publishYear;
+
+
+    public String status;
 }
 
