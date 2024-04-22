@@ -4,7 +4,6 @@ import org.isd.shop.entities.Order;
 import org.isd.shop.enums.Enums;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IOrderService {
     List<Order> getAllOrders();
@@ -15,9 +14,10 @@ public interface IOrderService {
 
     List<Order> getOrderByUserId(Long userId);
 
-    List<Order> getOrderByStatus(String status);
+    List<Order> getOrderByStatusByAdmin(String status);
 
+    List<Order> getOrderByUserIdAndStatus(Long userId, Enums.OrderStatus status);
 
-    Order findInitOrderByUserId(Long userId);
+    Order confirmOrder(String token, Long userId, String name, String address, String phone, String note);
 }
 

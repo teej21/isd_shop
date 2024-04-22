@@ -1,6 +1,7 @@
 package org.isd.shop.services.order;
 
 import lombok.RequiredArgsConstructor;
+import org.isd.shop.components.JwtTokenUtil;
 import org.isd.shop.entities.Order;
 import org.isd.shop.entities.User;
 import org.isd.shop.enums.Enums;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class OrderService implements IOrderService {
+    private final JwtTokenUtil jwtTokenUtil;
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
@@ -34,10 +36,14 @@ public class OrderService implements IOrderService {
         if (user.isEmpty()) {
             throw new RuntimeException("ID Người Dùng Không Tồn Tại");
         }
+        Optional<List<Order>> orders = orderRepository.findByUserAndStatus(user.get(), Enums.OrderStatus.INIT);
+        if (orders.isPresent() & orders.get().size() != 0) {
+            throw new RuntimeException("Người Dùng Có Đơn Hàng Chưa Xử Lý");
+        }
         Order order = Order.builder()
-                .user(user.get())
-                .status(Enums.OrderStatus.INIT)
-                .build();
+            .user(user.get())
+            .status(Enums.OrderStatus.INIT)
+            .build();
         return orderRepository.save(order);
     }
 
@@ -52,8 +58,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> getOrderByStatus(String status) {
-        Optional<List<Order>> orders = orderRepository.findByStatus(status);
+    public List<Order> getOrderByStatusByAdmin(String status) {
+        Optional<List<Order>> orders = orderRepository.findByStatus(Enums.OrderStatus.valueOf(status));
         if (orders.isEmpty()) {
             throw new RuntimeException("Không Tìm Thấy Đơn Hàng");
         }
@@ -61,14 +67,48 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order findInitOrderByUserId(Long userId) {
+    public List<Order> getOrderByUserIdAndStatus(Long userId, Enums.OrderStatus status) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
             throw new RuntimeException("ID Người Dùng Không Tồn Tại");
         }
-        Optional<Order> order = orderRepository.findByUserAndStatus(user.get(), Enums.OrderStatus.valueOf("INIT"));
-        return order.orElseGet(() -> createOrder(userId));
+        Optional<List<Order>> orders = orderRepository.findByUserAndStatus(user.get(), status);
+        if (orders.isEmpty() || orders.get().size() == 0) {
+            throw new RuntimeException("Không Tìm Thấy Đơn Hàng");
+        }
+        return orders.get();
     }
 
+    @Override
+    public Order confirmOrder(
+        String token,
+        Long userId,
+        String name,
+        String address,
+        String phone,
+        String note) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new RuntimeException("ID Người Dùng Không Tồn Tại");
+        }
+        Optional<List<Order>> orders = orderRepository.findByUserAndStatus(user.get(), Enums.OrderStatus.INIT);
+        if (orders.isEmpty() || orders.get().size() == 0) {
+            throw new RuntimeException("Giỏ Hàng Trống");
+        }
 
+        Order order = orders.get().get(0);
+        order.setStatus(Enums.OrderStatus.PENDING);
+        order.setName(name);
+        order.setAddress(address);
+        order.setPhoneNumber(phone);
+        order.setNote(note);
+        return orderRepository.save(order);
+    }
+
+//    private boolean isValidUserIdByToken(String token, Long userId) {
+//        String extractedUserId = jwtTokenUtil.extractClaim(token, "userId");
+//        System.out.println(extractedUserId);
+//        System.out.println(userId);
+//        return extractedUserId.equals(userId.toString());
+//    }
 }

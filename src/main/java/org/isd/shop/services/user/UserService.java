@@ -52,15 +52,15 @@ public class UserService implements IUserService {
             }
 
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                    user.getEmail(),
-                    password);
+                user.getPhoneNumber(),
+                password);
             authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-            RefreshTokenResponse refreshTokenResponse = jwtTokenUtil.generateTokens(user.getEmail());
+            RefreshTokenResponse refreshTokenResponse = jwtTokenUtil.generateTokens(user.getId(), user.getPhoneNumber());
             return UserLoginResponse.builder()
-                    .fullName(user.getFullName())
-                    .tokens(refreshTokenResponse)
-                    .role(user.getRole().toString())
-                    .build();
+                .fullName(user.getFullName())
+                .tokens(refreshTokenResponse)
+                .role(user.getRole().toString())
+                .build();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
 
@@ -90,15 +90,15 @@ public class UserService implements IUserService {
             }
             //          register for customer
             User user = User.builder()
-                    .fullName(fullName)
-                    .email(email)
-                    .phoneNumber(phoneNumber)
-                    .password(passwordEncoder.encode(password))
-                    .gender(Enums.Gender.valueOf(gender.toUpperCase()))
-                    .role(Enums.Role.valueOf(role.toUpperCase()))
-                    .dateOfBirth(dateOfBirth)
-                    .address(address)
-                    .build();
+                .fullName(fullName)
+                .email(email)
+                .phoneNumber(phoneNumber)
+                .password(passwordEncoder.encode(password))
+                .gender(Enums.Gender.valueOf(gender.toUpperCase()))
+                .role(Enums.Role.valueOf(role.toUpperCase()))
+                .dateOfBirth(dateOfBirth)
+                .address(address)
+                .build();
 
             userRepository.save(user);
             return new UserSignupResponse("Đăng kí thành công");
@@ -177,10 +177,10 @@ public class UserService implements IUserService {
     }
 
     private void validateUser(
-            String role,
-            String gender,
-            String email,
-            String phoneNumber
+        String role,
+        String gender,
+        String email,
+        String phoneNumber
     ) throws Exception {
         if (!utils.isValidRole(role)) {
             throw new Exception("Not found role " + role);

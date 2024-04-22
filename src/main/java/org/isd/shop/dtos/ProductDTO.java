@@ -25,7 +25,6 @@ public class ProductDTO {
     public Double price;
 
 
-
     private MultipartFile thumbnailImage;
 
 

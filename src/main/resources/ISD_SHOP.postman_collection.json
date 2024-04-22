@@ -1,0 +1,602 @@
+{
+	"info": {
+		"_postman_id": "aca0ae04-a3d8-457b-9bd4-32314f6d09af",
+		"name": "ISD_SHOP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28257534"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Categories Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcxNTg0NTY5Nn0.mEjvCxsX9gM4BlpOONI2P2g_uJfo_PXvnxyT1lsmPmk"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Tranh Phố Cổ Đẹp và Ấn Tượng\",\n    \"description\":\"Thời gian là kẻ thù của nhân loại, không một thứ gì có thể thoát được nó. Dưới sự tác động của thời gian, bất kể loài sinh vật nào rồi cũng sẽ phải đối mặt với cửa tử của mình, loài người cũng vậy. Lịch sử nhân loại là cả một quá trình phát triển và lụi tàn, trải qua hàng nghìn năm, kể cả những đế chế huy hoàng trong lịch sử cũng sẽ biến mất, chỉ còn được biết đến qua sử sách. Tuy nhiên, thời gian đã không thể xóa sạch những tàn dư của nền văn minh cũ. Trải qua bao biến động, nhân loại vẫn may mắn giữ gìn và tìm thấy những nền văn minh cổ đại, hay nói đúng hơn là những gì còn sót lại của nền văn minh cũ – những kiến trúc cổ. Chúng chính là những minh chứng rõ ràng nhất về sự tồn tại và phát triển của loài người trong quá khứ.\\nỞ Việt Nam, chúng ta vẫn còn giữ gìn và bảo tồn được những kiến trúc cổ đã tồn tại và chứng kiến sự phát triển, sụp đổ của nhiều vương triều khác nhau. Trong số đó có thể nói đến những con phố cổ. Chúng là chứng nhân lịch sử, tồn tại và đứng vững qua bom đạn, là bằng chứng sống rõ nét nhất về tinh thần quật cường của người Việt Nam ta trong những năm tháng kháng chiến và phát triển.\\nNhững bức tranh phố cổ thường mang nét hoài niệm, tiếc nuối của tác giả về quá khứ đã qua. Chúng cũng là sự tri ân sâu sắc đối với thế hệ người đi trước, những người đã đặt nền móng cho sự phát triển của cả dân tộc. Không quá khi cho rằng, đề tài tranh phố cổ là một trong những đề tài đặc sắc và chiếm được nhiều cảm tình nhất của những người đam mê nghệ thuật hội họa tại Việt Nam.\\nBantranh.com xin được giới thiệu bộ sưu tập tranh đề tài phố cổ đồ sộ và phong phú cho bạn thoải mái tham khảo và lựa chọn. Hãy chọn cho mình một bức tranh ưng ý nhất nhé.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/categories"
+					},
+					"response": []
+				},
+				{
+					"name": "Categories Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8686/categories/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Categories Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8686/categories/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Categories Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzcwMTg0NH0.2V3-Asjtx7APpV6EaIJZjV-VMjesW1Epe8SgXYCLOM0"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Tranh Phố Cổ Đẹp và Ấn Tượng vcl121221 haha\",\n    \"description\":\"Thời gian là kẻ thù của nhân loại, không một thứ gì có thể thoát được nó. Dưới sự tác động của thời gian, bất kể loài sinh vật nào rồi cũng sẽ phải đối mặt với cửa tử của mình, loài người cũng vậy. Lịch sử nhân loại là cả một quá trình phát triển và lụi tàn, trải qua hàng nghìn năm, kể cả những đế chế huy hoàng trong lịch sử cũng sẽ biến mất, chỉ còn được biết đến qua sử sách. Tuy nhiên, thời gian đã không thể xóa sạch những tàn dư của nền văn minh cũ. Trải qua bao biến động, nhân loại vẫn may mắn giữ gìn và tìm thấy những nền văn minh cổ đại, hay nói đúng hơn là những gì còn sót lại của nền văn minh cũ – những kiến trúc cổ. Chúng chính là những minh chứng rõ ràng nhất về sự tồn tại và phát triển của loài người trong quá khứ. Ở Việt Nam, chúng ta vẫn còn giữ gìn và bảo tồn được những kiến trúc cổ đã tồn tại và chứng kiến sự phát triển, sụp đổ của nhiều vương triều khác nhau. Trong số đó có thể nói đến những con phố cổ. Chúng là chứng nhân lịch sử, tồn tại và đứng vững qua bom đạn, là bằng chứng sống rõ nét nhất về tinh thần quật cường của người Việt Nam ta trong những năm tháng kháng chiến và phát triển. Những bức tranh phố cổ thường mang nét hoài niệm, tiếc nuối của tác giả về quá khứ đã qua. Chúng cũng là sự tri ân sâu sắc đối với thế hệ người đi trước, những người đã đặt nền móng cho sự phát triển của cả dân tộc. Không quá khi cho rằng, đề tài tranh phố cổ là một trong những đề tài đặc sắc và chiếm được nhiều cảm tình nhất của những người đam mê nghệ thuật hội họa tại Việt Nam. Bantranh.com xin được giới thiệu bộ sưu tập tranh đề tài phố cổ đồ sộ và phong phú cho bạn thoải mái tham khảo và lựa chọn. Hãy chọn cho mình một bức tranh ưng ý nhất nhé.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/categories/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Categories Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzcwMTg0NH0.2V3-Asjtx7APpV6EaIJZjV-VMjesW1Epe8SgXYCLOM0"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/categories/5"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Comfirm Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMTgiLCJ1c2VySWQiOiIxIiwiZXhwIjoxNzE1ODQ4NDIwfQ.pH3MXTVI2qox3pwVV_1HO-Gq2q_-xe9WSWqlWhCcQOU"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Thanh Vinh\",\n    \"phoneNumber\": \"6231883113\",\n    \"address\":\"Hanoi\",\n    \"note\":\"em ghi la \\\"Tang vo iu\\\" ho anh\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/orders/user/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order By Status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMTgiLCJ1c2VySWQiOiIxIiwiZXhwIjoxNzE1ODQ4NDIwfQ.pH3MXTVI2qox3pwVV_1HO-Gq2q_-xe9WSWqlWhCcQOU"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8686/orders/?status=PENDING",
+							"host": [
+								"localhost"
+							],
+							"port": "8686",
+							"path": [
+								"orders",
+								""
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders Details",
+			"item": [
+				{
+					"name": "Orders Details Add Product To Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":\"1\",\n    \"product_id\":\"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/order-details"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Products Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxNDM1Nzc1OX0.ZX3CDMMnTnaF6Tg4SfJK5LpMzPrIRUAHBQBu0mQxqAc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Ipad Pro Alo ",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo ",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "categoryId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "material",
+									"value": "alo1234",
+									"type": "text"
+								},
+								{
+									"key": "width",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "height",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "publishYear",
+									"value": "2021",
+									"type": "text"
+								},
+								{
+									"key": "thumbnailImage",
+									"type": "file",
+									"src": "postman-cloud:///1eef7b0f-5af5-4f80-a9dc-06bfdc8af298"
+								},
+								{
+									"key": "status",
+									"value": "STOCKOUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": "localhost:8686/products"
+					},
+					"response": []
+				},
+				{
+					"name": "Products Add Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxNDM1Nzc1OX0.ZX3CDMMnTnaF6Tg4SfJK5LpMzPrIRUAHBQBu0mQxqAc"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Ipad Pro Alo ",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo ",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "categoryId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "material",
+									"value": "alo1234",
+									"type": "text"
+								},
+								{
+									"key": "width",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "height",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "publishYear",
+									"value": "2021",
+									"type": "text"
+								},
+								{
+									"key": "thumbnailImage",
+									"type": "file",
+									"src": "postman-cloud:///1eef7b0f-5af5-4f80-a9dc-06bfdc8af298"
+								},
+								{
+									"key": "status",
+									"value": "STOCKOUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": "localhost:8686/products/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Products Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8686/products"
+					},
+					"response": []
+				},
+				{
+					"name": "Products Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8686/products/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Products Get Img By Name",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8686/products/images/57f3bf2e-62a8-4261-9b8a-b7c0241e3a111713838707799402912458_18299279011134409_1484922622696624161_n.jpg"
+					},
+					"response": []
+				},
+				{
+					"name": "Products Get By Category ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8686/products/category=1"
+					},
+					"response": []
+				},
+				{
+					"name": "Products Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzgzNDA4MH0.kjL7yAM6MMGlMzGKJsDYIduKMyaIxRAGlXLhBRQTxEI"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/products/6"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Register Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"12dfs@gmai1l.com\",\n         \"phone_number\": \"6231883112\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"CUSTOMER\"\n      } \n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/register"
+					},
+					"response": []
+				},
+				{
+					"name": "User Get All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzgzMzk2M30.rzDvjBBv3LbwUCQlaGQUKAHvS7m_yRKe-7QlzQxLglE"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"vinh@gmaiwl.com\",\n         \"phone_number\": \"0219233112\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"CUSTOMER\"\n      } \n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/admin/users"
+					},
+					"response": []
+				},
+				{
+					"name": "User Get By ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzcwMTg0NH0.2V3-Asjtx7APpV6EaIJZjV-VMjesW1Epe8SgXYCLOM0"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"vinh@gmaiwl.com\",\n         \"phone_number\": \"0219233112\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"CUSTOMER\"\n      } \n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/admin/users/1"
+					},
+					"response": []
+				},
+				{
+					"name": "User Get By Role",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzcwMTg0NH0.2V3-Asjtx7APpV6EaIJZjV-VMjesW1Epe8SgXYCLOM0"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"vinh@gmaiwl.com\",\n         \"phone_number\": \"0219233112\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"CUSTOMER\"\n      } \n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/admin/users/role=ADMIN"
+					},
+					"response": []
+				},
+				{
+					"name": "User Delete By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzcwMTg0NH0.2V3-Asjtx7APpV6EaIJZjV-VMjesW1Epe8SgXYCLOM0"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"vinh@gmaiwl.com\",\n         \"phone_number\": \"0219233112\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"CUSTOMER\"\n      } \n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/admin/users/7"
+					},
+					"response": []
+				},
+				{
+					"name": "User Add New By Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzg4NDQ1MX0.ScN8Nfw2PBqzDbRWaRdkdAfm4xWa37baHSHiO3qjRoc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"vin11hs1a@2gmai231l.com\",\n         \"phone_number\": \"9422282112\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"CUSTOMER\",\n          \"address\": \"123 Main St\",\n          \"date_of_birth\": \"1990-01-01T00:00:00.000+00:00\"\n      } \n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/admin/users"
+					},
+					"response": []
+				},
+				{
+					"name": "User Update By Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxMzcwMTg0NH0.2V3-Asjtx7APpV6EaIJZjV-VMjesW1Epe8SgXYCLOM0"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"v2in2ah@gmaiwl.com\",\n         \"phone_number\": \"0919232888\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"ADMIN\"\n      } \n     ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/admin/users/1"
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"username\": \"122dfs@gmai1l.com\",\n        \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/login"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
