@@ -132,6 +132,7 @@ public class OrderService implements IOrderService {
             }
             String extractedToken = token.substring(7);
             if (!jwtTokenUtil.isValidUserIdByToken(extractedToken, employeeId)) {
+            if (!isValidUserIdByToken(extractedToken, employeeId)) {
                 throw new RuntimeException("Bạn Chỉ Có Thể Xem Đơn Hàng Được Giao");
             }
             Optional<User> employee = userRepository.findById(employeeId);
@@ -149,4 +150,8 @@ public class OrderService implements IOrderService {
     }
 
 
+    private boolean isValidUserIdByToken(String token, Long userId) {
+        String extractedUserId = jwtTokenUtil.extractClaim(token, "userId");
+        return extractedUserId.equals(userId.toString());
+    }
 }

@@ -53,6 +53,22 @@ public class WebSecurityConfig {
                     response.setContentType("application/json");
                     ErrorResultResponse errorResultResponse = new ErrorResultResponse("Bạn Không Có Quyền Truy Cập Vào Tài Nguyên Này");
                     response.getWriter().write(errorResultResponse.toString());
+                .csrf(AbstractHttpConfigurer::disable)
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(request -> {
+                    request.
+                            requestMatchers("/register").permitAll()
+                            .requestMatchers("/login").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
+                            .requestMatchers("/admin/**").hasRole("ADMIN")
+                            .requestMatchers("/products/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE")
+                            .requestMatchers("/categories/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE")
+                            .requestMatchers("orders/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER")
+                            .requestMatchers("/order-details/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER")
+                            .anyRequest().authenticated()
+                    ;
+
                 })
             );
         return http.build();
