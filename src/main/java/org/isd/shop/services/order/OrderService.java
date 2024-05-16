@@ -92,7 +92,7 @@ public class OrderService implements IOrderService {
             throw new RuntimeException("ID Người Dùng Không Tồn Tại");
         }
         Optional<List<Order>> orders = orderRepository.findByUserAndStatus(user.get(), Enums.OrderStatus.INIT);
-        if (orders.isEmpty() || orders.get().size() == 0) {
+        if (orders.isEmpty() || orders.get().isEmpty()) {
             throw new RuntimeException("Giỏ Hàng Trống");
         }
 
@@ -105,10 +105,48 @@ public class OrderService implements IOrderService {
         return orderRepository.save(order);
     }
 
-//    private boolean isValidUserIdByToken(String token, Long userId) {
-//        String extractedUserId = jwtTokenUtil.extractClaim(token, "userId");
-//        System.out.println(extractedUserId);
-//        System.out.println(userId);
-//        return extractedUserId.equals(userId.toString());
-//    }
+    @Override
+    public Order updateEmployee(Long employeeId, Long orderId) {
+        Optional<User> employee = userRepository.findById(employeeId);
+
+        if (employee.isEmpty()) {
+            throw new RuntimeException("ID Nhân Viên Không Tồn Tại");
+        }
+
+
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isEmpty()) {
+            throw new RuntimeException("ID Đơn Hàng Không Tồn Tại");
+        }
+        order.get().setEmployee(employee.get());
+        order.get().setStatus(Enums.OrderStatus.ASSIGNED);
+        return orderRepository.save(order.get());
+
+    }
+
+    @Override
+    public List<Order> getAssignedOrder(String token, Long employeeId) {
+        try {
+            if (token == null || !token.startsWith("Bearer ")) {
+                throw new RuntimeException("Token Không Hợp Lệ");
+            }
+            String extractedToken = token.substring(7);
+            if (!jwtTokenUtil.isValidUserIdByToken(extractedToken, employeeId)) {
+                throw new RuntimeException("Bạn Chỉ Có Thể Xem Đơn Hàng Được Giao");
+            }
+            Optional<User> employee = userRepository.findById(employeeId);
+            if (employee.isEmpty()) {
+                throw new RuntimeException("ID Nhân Viên Không Tồn Tại");
+            }
+            Optional<List<Order>> orders = orderRepository.findByEmployee(employee.get());
+            if (orders.isEmpty() || orders.get().isEmpty()) {
+                throw new RuntimeException("Không Tìm Thấy Đơn Hàng");
+            }
+            return orders.get();
+        } catch (Exception e) {
+            throw new RuntimeException("Không Tìm Thấy Đơn Hàng");
+        }
+    }
+
+
 }

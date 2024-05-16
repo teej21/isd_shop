@@ -38,8 +38,8 @@ public class Order {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "caring_employee_id")
-    private User caringEmployee;
+    @JoinColumn(name = "employee_id")
+    private User employee;
 
     @Column(name = "status", columnDefinition = "varchar(255) default 'INIT'")
     @Enumerated(EnumType.STRING)

@@ -112,5 +112,10 @@ public class JwtTokenUtil {
             .getBody()
             .get(claim, String.class);
     }
+
+    public boolean isValidUserIdByToken(String token, Long userId) {
+        String extractedUserId = extractClaim(token, "userId");
+        return extractedUserId.equals(userId.toString());
+    }
 }
 

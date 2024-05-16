@@ -14,6 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class Utils {
+
+    private final JwtTokenUtil jwtTokenUtil;
+
     public boolean isValidEmail(String email) {
         return email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
     }
@@ -43,19 +46,20 @@ public class Utils {
 
     public String handleBindingResultError(BindingResult bindingResult) {
         List<String> errorMessages = bindingResult.getFieldErrors()
-                .stream()
-                .map(FieldError::getDefaultMessage)
-                .toList();
+            .stream()
+            .map(FieldError::getDefaultMessage)
+            .toList();
         return errorMessages.get(0);
     }
 
-    public ResponseEntity<ErrorResultResponse>  ErrorResponse(Exception e) {
+    public ResponseEntity<ErrorResultResponse> ErrorResponse(Exception e) {
         return ResponseEntity.badRequest().body(new ErrorResultResponse(e.getMessage()));
     }
 
-    public  ResponseEntity<ResultResponse> ResultResponse(String result) {
+    public ResponseEntity<ResultResponse> ResultResponse(String result) {
         return ResponseEntity.ok().body(new ResultResponse(result));
     }
+
 
 
 }
