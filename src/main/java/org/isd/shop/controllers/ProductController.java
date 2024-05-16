@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping("/products")
 @RequiredArgsConstructor
 
+@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*", exposedHeaders = "Authorization")
 public class ProductController {
     private final IProductService productService;
     private final Utils utils;
