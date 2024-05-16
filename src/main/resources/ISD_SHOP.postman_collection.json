@@ -15,7 +15,7 @@
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcxNTg0NTY5Nn0.mEjvCxsX9gM4BlpOONI2P2g_uJfo_PXvnxyT1lsmPmk"
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMzAiLCJ1c2VySWQiOiIyIiwiZXhwIjoxNzE1ODQ4MzU2fQ.qp2uIZQTu54p4MT9SCL41-hS9PFolg_Gc0HNJbrbxFo"
 							}
 						},
 						"method": "POST",
@@ -38,7 +38,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8686/categories/1"
+						"url": "localhost:8686/categories"
 					},
 					"response": []
 				},
@@ -129,6 +129,84 @@
 					"response": []
 				},
 				{
+					"name": "Comfirm Assifn Order To Employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjAxMjM0NTY3ODkiLCJ1c2VySWQiOiI0IiwiZXhwIjoxNzE1OTI4ODc2fQ.aG25zbqRJWvCq0wvT1ecVdQB44aM_k22OgSGRa302NA"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employeeId\":4,\n    \"orderId\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/orders/user/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMTgiLCJ1c2VySWQiOiIxIiwiZXhwIjoxNzE1ODQ4NDIwfQ.pH3MXTVI2qox3pwVV_1HO-Gq2q_-xe9WSWqlWhCcQOU"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/orders/admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Asigned Orders by Employee",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMTgiLCJ1c2VySWQiOiIxIiwiZXhwIjoxNzE1ODQ4NDIwfQ.pH3MXTVI2qox3pwVV_1HO-Gq2q_-xe9WSWqlWhCcQOU"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/orders/admin"
+					},
+					"response": []
+				},
+				{
 					"name": "Get Order By Status",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -151,23 +229,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8686/orders/?status=PENDING",
-							"host": [
-								"localhost"
-							],
-							"port": "8686",
-							"path": [
-								"orders",
-								""
-							],
-							"query": [
-								{
-									"key": "status",
-									"value": "PENDING"
-								}
-							]
-						}
+						"url": "localhost:8686/orders/admin/INITT"
 					},
 					"response": []
 				}
@@ -179,11 +241,17 @@
 				{
 					"name": "Orders Details Add Product To Order",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMTgiLCJ1c2VySWQiOiIxIiwiZXhwIjoxNzE1ODQ4NDIwfQ.pH3MXTVI2qox3pwVV_1HO-Gq2q_-xe9WSWqlWhCcQOU"
+							}
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_id\":\"1\",\n    \"product_id\":\"1\"\n}",
+							"raw": "{\n    \"user_id\":\"2\",\n    \"product_id\":\"61\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -205,7 +273,7 @@
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbG8xMjMxQGdtYWlsLmNvbSIsImV4cCI6MTcxNDM1Nzc1OX0.ZX3CDMMnTnaF6Tg4SfJK5LpMzPrIRUAHBQBu0mQxqAc"
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMzAiLCJ1c2VySWQiOiIyIiwiZXhwIjoxNzE1ODQ4MzU2fQ.qp2uIZQTu54p4MT9SCL41-hS9PFolg_Gc0HNJbrbxFo"
 							}
 						},
 						"method": "POST",
@@ -290,7 +358,7 @@
 								},
 								{
 									"key": "description",
-									"value": "Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo ",
+									"value": "Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Alo Ipad Pro Al",
 									"type": "text"
 								},
 								{
@@ -414,7 +482,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"12dfs@gmai1l.com\",\n         \"phone_number\": \"6231883112\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"CUSTOMER\"\n      } \n     ",
+							"raw": "\n      {\n          \"full_name\": \"John Doe1\",\n         \"email\": \"122dfs@gmai1l.com\",\n         \"phone_number\": \"6231883130\",\n          \"password\": \"password\",\n          \"gender\":\"MALE\",\n          \"role\": \"CUSTOMER\"\n      } \n     ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -585,7 +653,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n      \"username\": \"122dfs@gmai1l.com\",\n        \"password\": \"password\"\n}",
+							"raw": "{\n      \"username\": \"122dfs@gmai1l.coem\",\n        \"password\": \"password\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

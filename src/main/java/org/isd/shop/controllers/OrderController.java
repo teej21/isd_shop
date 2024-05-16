@@ -3,6 +3,7 @@ package org.isd.shop.controllers;
 import lombok.RequiredArgsConstructor;
 import org.isd.shop.components.Utils;
 import org.isd.shop.dtos.ConfirmOrderDTO;
+import org.isd.shop.dtos.UpdateOrderEmployeeDTO;
 import org.isd.shop.services.order.IOrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,30 @@ public class OrderController {
             return utils.ErrorResponse(e);
         }
     }
+
+    @PutMapping("/admin/update-employee")
+    public ResponseEntity<?> updateEmployee(@RequestBody UpdateOrderEmployeeDTO updateOrderEmployeeDTO) {
+        try {
+            Long employeeId = updateOrderEmployeeDTO.getEmployeeId();
+            Long orderId = updateOrderEmployeeDTO.getOrderId();
+            return ResponseEntity.ok(orderService.updateEmployee(employeeId, orderId));
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
+
+
+    @GetMapping("/employees/{employeeId}")
+    public ResponseEntity<?> getAssignedOrder(@PathVariable Long employeeId, @RequestHeader("Authorization") String authHeader) {
+        try {
+            return ResponseEntity.ok(orderService.getAssignedOrder(authHeader, employeeId));
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+
+
+    }
+
 
     @PutMapping("/user/{userId}")
     public ResponseEntity<?> confirmOrder(

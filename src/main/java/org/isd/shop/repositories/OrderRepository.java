@@ -14,4 +14,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<List<Order>> findByStatus(Enums.OrderStatus status);
 
     Optional<List<Order>> findByUserAndStatus(User user, Enums.OrderStatus orderStatus);
+
+    Optional<List<Order>> findByEmployee(User user);
 }
