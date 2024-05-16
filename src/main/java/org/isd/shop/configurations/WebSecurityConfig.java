@@ -53,6 +53,8 @@ public class WebSecurityConfig {
                     response.setContentType("application/json");
                     ErrorResultResponse errorResultResponse = new ErrorResultResponse("Bạn Không Có Quyền Truy Cập Vào Tài Nguyên Này");
                     response.getWriter().write(errorResultResponse.toString());
+
+
                 })
             );
         return http.build();
