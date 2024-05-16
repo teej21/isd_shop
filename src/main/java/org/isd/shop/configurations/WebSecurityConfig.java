@@ -28,6 +28,30 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(c -> c.configurationSource(corsConfigurationSource()))
+            .csrf(AbstractHttpConfigurer::disable)
+            .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+            .authorizeHttpRequests(request -> {
+                request.
+                    requestMatchers("/register").permitAll()
+                    .requestMatchers("/login").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/products/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE")
+                    .requestMatchers("/categories/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE")
+                    .requestMatchers("/orders/admin/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE")
+                    .requestMatchers("/orders/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER")
+                    .requestMatchers("/order-details/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER")
+                    .anyRequest().authenticated()
+                ;
+            })
+            .exceptionHandling(e ->
+                e.accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.setStatus(403);
+                    request.setCharacterEncoding("UTF-8");
+                    response.setContentType("application/json");
+                    ErrorResultResponse errorResultResponse = new ErrorResultResponse("Bạn Không Có Quyền Truy Cập Vào Tài Nguyên Này");
+                    response.getWriter().write(errorResultResponse.toString());
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> {
@@ -43,16 +67,9 @@ public class WebSecurityConfig {
                             .requestMatchers("/order-details/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER")
                             .anyRequest().authenticated()
                     ;
+
                 })
-                .exceptionHandling(e ->
-                        e.accessDeniedHandler((request, response, accessDeniedException) -> {
-                            response.setStatus(403);
-                            request.setCharacterEncoding("UTF-8");
-                            response.setContentType("application/json");
-                            ErrorResultResponse errorResultResponse = new ErrorResultResponse("Bạn Không Có Quyền Truy Cập Vào Tài Nguyên Này");
-                            response.getWriter().write(errorResultResponse.toString());
-                        })
-                );
+            );
         return http.build();
     }
 

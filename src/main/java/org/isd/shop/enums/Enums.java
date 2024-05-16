@@ -42,6 +42,7 @@ public class Enums {
     public enum OrderStatus {
         INIT("INIT"),
         PENDING("PENDING"),
+        ASSIGNED("ASSIGNED"),
         SHIPPED("SHIPPING"),
         DELIVERED("DELIVERED"),
         CANCELLED("CANCELLED");

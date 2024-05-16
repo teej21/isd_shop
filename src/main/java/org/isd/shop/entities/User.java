@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User  implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,6 +33,7 @@ public class User  implements UserDetails {
 
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phoneNumber;
+
     @Column(name = "gender", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Enums.Gender gender;
@@ -65,7 +66,7 @@ public class User  implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return phoneNumber;
     }
 
 

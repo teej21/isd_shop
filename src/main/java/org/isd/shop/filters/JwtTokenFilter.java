@@ -50,9 +50,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 throw new Exception();
             }
             final String token = authHeader.substring(7);
-            final String email = jwtTokenUtil.extractEmail(token);
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                User userDetails = (User) userDetailsService.loadUserByUsername(email);
+            final String phoneNumber = jwtTokenUtil.extractPhoneNumber(token);
+            if (phoneNumber != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                User userDetails = (User) userDetailsService.loadUserByUsername(phoneNumber);
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,

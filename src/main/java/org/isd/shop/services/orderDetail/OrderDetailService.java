@@ -35,13 +35,30 @@ public class OrderDetailService implements IOrderDetailService {
         if (!userService.checkUserExist(userId)) {
             throw new RuntimeException("ID Người Dùng Không Tồn Tại");
         }
+        Order order;
+        try {
+
+            order = orderService.getOrderByUserIdAndStatus(userId, Enums.OrderStatus.INIT).get(0);
+        } catch (Exception e) {
+            order = orderService.createOrder(userId);
+        }
 
         Product product = productService.getProductById(productId);
-        Order order = orderService.findInitOrderByUserId(userId);
+        Enums.ProductStatus productStatus = product.getStatus();
+        if (productStatus == Enums.ProductStatus.ORDERED) {
+            throw new RuntimeException("Sản Phẩm Hiện Đã Có Người Đặt");
+        }
+
+        if (productStatus == Enums.ProductStatus.STOCKOUT) {
+            throw new RuntimeException("Sản Phẩm Đã Được Bán");
+        }
+
+        product.setStatus(Enums.ProductStatus.ORDERED);
+
         OrderDetail orderDetail = OrderDetail.builder()
-                .order(order)
-                .product(product)
-                .build();
+            .order(order)
+            .product(product)
+            .build();
 
         return OrderDetailResponse.fromOrderDetail(orderDetailRepository.save(orderDetail));
     }

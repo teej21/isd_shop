@@ -2,9 +2,8 @@ package org.isd.shop.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.isd.shop.components.Utils;
-import org.isd.shop.responses.common.ErrorResultResponse;
+import org.isd.shop.dtos.ConfirmOrderDTO;
 import org.isd.shop.services.order.IOrderService;
-import org.isd.shop.services.orderDetail.IOrderDetailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +24,31 @@ public class OrderController {
         }
     }
 
-    @GetMapping("")
+    @GetMapping("/admin")
     public ResponseEntity<?> getAllOrders() {
         try {
             return ResponseEntity.ok(orderService.getAllOrders());
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
+
+    @PutMapping("/user/{userId}")
+    public ResponseEntity<?> confirmOrder(
+        @RequestHeader("Authorization") String authHeader,
+        @PathVariable Long userId,
+        @RequestBody ConfirmOrderDTO confirmOrderDTO) {
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                throw new Exception("Token không hợp lệ");
+            }
+            String token = authHeader.substring(7);
+
+            String name = confirmOrderDTO.getName();
+            String address = confirmOrderDTO.getAddress();
+            String phone = confirmOrderDTO.getPhoneNumber();
+            String note = confirmOrderDTO.getNote();
+            return ResponseEntity.ok(orderService.confirmOrder(token, userId, name, address, phone, note));
         } catch (Exception e) {
             return utils.ErrorResponse(e);
         }
@@ -51,10 +71,11 @@ public class OrderController {
             return utils.ErrorResponse(e);
         }
     }
-    @GetMapping("status={status}")
-    public ResponseEntity<?> getOrderByStatus(@PathVariable String status) {
+
+    @GetMapping("/admin/{status}")
+    public ResponseEntity<?> getOrderByStatusByAdmin(@PathVariable String status) {
         try {
-            return ResponseEntity.ok(orderService.getOrderByStatus(status));
+            return ResponseEntity.ok(orderService.getOrderByStatusByAdmin(status));
         } catch (Exception e) {
             return utils.ErrorResponse(e);
         }

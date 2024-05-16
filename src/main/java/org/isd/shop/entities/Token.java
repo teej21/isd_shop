@@ -31,4 +31,9 @@ public class Token {
 
     @Column(name = "access_token_expiry_date")
     private Date accessTokenExpiryDate;
+
+    //each user has a token
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

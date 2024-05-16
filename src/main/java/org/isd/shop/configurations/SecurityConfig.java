@@ -34,11 +34,11 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return email -> userRepository
-                .findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                "Cannot find user with email = " + email));
+        return phoneNumber -> userRepository
+            .findByPhoneNumber(phoneNumber)
+            .orElseThrow(() ->
+                new UsernameNotFoundException(
+                    "Cannot find user with email = " + phoneNumber));
     }
 
     @Bean
@@ -56,19 +56,19 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
+        AuthenticationConfiguration authenticationConfiguration)
+        throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Apply CORS to all paths
-                .allowedOrigins("http://localhost:3000") // Allow this origin
-                .allowedMethods(RequestMethod.GET.name(), RequestMethod.POST.name(), RequestMethod.PUT.name(), RequestMethod.DELETE.name()) // Allow these methods
-                .allowedHeaders("*") // Allow all headers
-                .exposedHeaders("Authorization") // Expose 'Authorization' header
-                .allowCredentials(true); // Allow credentials
+            .allowedOrigins("http://localhost:3000") // Allow this origin
+            .allowedMethods(RequestMethod.GET.name(), RequestMethod.POST.name(), RequestMethod.PUT.name(), RequestMethod.DELETE.name()) // Allow these methods
+            .allowedHeaders("*") // Allow all headers
+            .exposedHeaders("Authorization") // Expose 'Authorization' header
+            .allowCredentials(true); // Allow credentials
     }
 
 

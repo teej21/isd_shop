@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
+
 @CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, allowedHeaders = "*", exposedHeaders = "Authorization")
 public class ProductController {
     private final IProductService productService;
@@ -43,12 +44,12 @@ public class ProductController {
 
             if (resource.exists()) {
                 return ResponseEntity.ok()
-                        .contentType(MediaType.IMAGE_JPEG)
-                        .body(resource);
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(resource);
             } else {
                 return ResponseEntity.ok()
-                        .contentType(MediaType.IMAGE_JPEG)
-                        .body(new UrlResource(Paths.get("uploads/notfound.jpg").toUri()));
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(new UrlResource(Paths.get("uploads/notfound.jpg").toUri()));
                 //return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
@@ -73,15 +74,16 @@ public class ProductController {
         try {
 
             return ResponseEntity.ok(productService.addProduct(
-                    productDTO.getName(),
-                    productDTO.getDescription(),
-                    productDTO.getPrice(),
-                    productDTO.getCategoryId(),
-                    productDTO.getWidth(),
-                    productDTO.getHeight(),
-                    productDTO.getMaterial(),
-                    productDTO.getPublishYear(),
-                    productDTO.getThumbnailImage()
+                productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getCategoryId(),
+                productDTO.getWidth(),
+                productDTO.getHeight(),
+                productDTO.getMaterial(),
+                productDTO.getPublishYear(),
+                productDTO.getThumbnailImage(),
+                productDTO.getStatus()
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -99,28 +101,28 @@ public class ProductController {
 
     @PutMapping("/{id}")
     private ResponseEntity<?> updateProduct(@PathVariable Long id, @ModelAttribute @Valid ProductDTO
-            productDTO, BindingResult result) {
+        productDTO, BindingResult result) {
         if (result.hasErrors()) {
             List<String> errorMessages = result.getFieldErrors()
-                    .stream()
-                    .map(FieldError::getDefaultMessage)
-                    .toList();
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .toList();
             return ResponseEntity.badRequest().body(errorMessages);
         }
 
         try {
             return ResponseEntity.ok(productService.updateProduct(
-                    id,
-                    productDTO.getName(),
-                    productDTO.getDescription(),
-                    productDTO.getPrice(),
-                    productDTO.getCategoryId(),
-                    productDTO.getWidth(),
-                    productDTO.getHeight(),
-                    productDTO.getMaterial(),
-                    productDTO.getPublishYear(),
-                    productDTO.getThumbnailImage(),
-                    productDTO.getStatus()
+                id,
+                productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getCategoryId(),
+                productDTO.getWidth(),
+                productDTO.getHeight(),
+                productDTO.getMaterial(),
+                productDTO.getPublishYear(),
+                productDTO.getThumbnailImage(),
+                productDTO.getStatus()
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

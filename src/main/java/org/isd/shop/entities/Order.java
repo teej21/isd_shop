@@ -20,12 +20,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", length = 100)
+    private String name;
+
     @Column(name = "address", length = 200)
     private String address;
 
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
+    //TYPE IS LONG TEXT
+    @Column(name = "note", columnDefinition = "LONGTEXT")
+    private String note;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

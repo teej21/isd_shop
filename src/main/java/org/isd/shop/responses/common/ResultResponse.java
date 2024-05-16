@@ -9,6 +9,4 @@ import lombok.RequiredArgsConstructor;
 public class ResultResponse {
     @JsonProperty("result")
     private String result;
-
-
 }

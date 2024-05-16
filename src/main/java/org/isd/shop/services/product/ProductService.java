@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.rmi.server.UID;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,7 +40,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product addProduct(String name, String description, double price, Long categoryId, double width, double height, String material, int publishYear, MultipartFile thumbnailImage) {
+    public Product addProduct(String name, String description, double price, Long categoryId, double width, double height, String material, int publishYear, MultipartFile thumbnailImage, String status) {
 
         Optional<Category> category = categoryRepository.findById(categoryId);
         if (category.isEmpty()) {
@@ -55,16 +54,17 @@ public class ProductService implements IProductService {
         }
 
         Product product = Product.builder()
-                .name(name)
-                .description(description)
-                .price(price)
-                .category(category.get())
-                .thumbnail(thumbnailImageUrl)
-                .height(height)
-                .width(width)
-                .material(material)
-                .publishYear(publishYear)
-                .build();
+            .name(name)
+            .description(description)
+            .price(price)
+            .category(category.get())
+            .thumbnail(thumbnailImageUrl)
+            .height(height)
+            .width(width)
+            .material(material)
+            .publishYear(publishYear)
+            .status(Enums.ProductStatus.valueOf(status.isEmpty() ? "AVAILABLE" : status))
+            .build();
         return productRepository.save(product);
     }
 
