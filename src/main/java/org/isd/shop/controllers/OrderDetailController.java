@@ -17,7 +17,7 @@ public class OrderDetailController {
 
     @GetMapping("/order/{orderId}")
     public ResponseEntity<?> getOrderDetailsByOrderId(@PathVariable Long orderId) {
-        try{
+        try {
             return ResponseEntity.ok(orderDetailService.getOrderDetailsByOrderId(orderId));
         } catch (Exception e) {
             return utils.ErrorResponse(e);
@@ -34,9 +34,9 @@ public class OrderDetailController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> createOrderDetail(@Validated @RequestBody OrderDetailDTO orderDetailDTO) {
+    public ResponseEntity<?> createOrderDetail(@Validated @RequestBody OrderDetailDTO orderDetailDTO, @RequestHeader("Authorization") String authHeader) {
         try {
-            return ResponseEntity.ok(orderDetailService.createOrderDetail(orderDetailDTO.getUserId(), orderDetailDTO.getProductId()));
+            return ResponseEntity.ok(orderDetailService.createOrderDetail(authHeader, orderDetailDTO.getUserId(), orderDetailDTO.getProductId()));
         } catch (Exception e) {
             return utils.ErrorResponse(e);
 

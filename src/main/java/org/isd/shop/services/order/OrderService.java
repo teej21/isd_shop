@@ -92,7 +92,7 @@ public class OrderService implements IOrderService {
             throw new RuntimeException("ID Người Dùng Không Tồn Tại");
         }
         Optional<List<Order>> orders = orderRepository.findByUserAndStatus(user.get(), Enums.OrderStatus.INIT);
-        if (orders.isEmpty() || orders.get().size() == 0) {
+        if (orders.isEmpty() || orders.get().isEmpty()) {
             throw new RuntimeException("Giỏ Hàng Trống");
         }
 
@@ -131,6 +131,7 @@ public class OrderService implements IOrderService {
                 throw new RuntimeException("Token Không Hợp Lệ");
             }
             String extractedToken = token.substring(7);
+            if (!jwtTokenUtil.isValidUserIdByToken(extractedToken, employeeId)) {
             if (!isValidUserIdByToken(extractedToken, employeeId)) {
                 throw new RuntimeException("Bạn Chỉ Có Thể Xem Đơn Hàng Được Giao");
             }
@@ -147,6 +148,7 @@ public class OrderService implements IOrderService {
             throw new RuntimeException("Không Tìm Thấy Đơn Hàng");
         }
     }
+
 
     private boolean isValidUserIdByToken(String token, Long userId) {
         String extractedUserId = jwtTokenUtil.extractClaim(token, "userId");
