@@ -19,5 +19,9 @@ public interface IOrderService {
     List<Order> getOrderByUserIdAndStatus(Long userId, Enums.OrderStatus status);
 
     Order confirmOrder(String token, Long userId, String name, String address, String phone, String note);
+
+    Order updateEmployee(Long employeeId, Long orderId);
+
+    List<Order> getAssignedOrder(String token, Long employeeId);
 }
 
