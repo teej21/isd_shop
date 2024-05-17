@@ -9,8 +9,10 @@ import org.isd.shop.entities.User;
 import org.isd.shop.enums.Enums;
 import org.isd.shop.repositories.OrderDetailReposity;
 import org.isd.shop.repositories.OrderRepository;
+import org.isd.shop.repositories.ProductRepository;
 import org.isd.shop.repositories.UserRepository;
 import org.isd.shop.responses.OrderDetail.OrderDetailResponse;
+import org.isd.shop.responses.common.ResultResponse;
 import org.isd.shop.services.order.IOrderService;
 import org.isd.shop.services.product.IProductService;
 import org.isd.shop.services.user.IUserService;
@@ -25,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderDetailService implements IOrderDetailService {
     private final OrderDetailReposity orderDetailRepository;
+    private final ProductRepository productRepository;
     private final IOrderService orderService;
     private final IProductService productService;
     private final IUserService userService;
@@ -76,5 +79,20 @@ public class OrderDetailService implements IOrderDetailService {
         return orderDetails.stream().map(OrderDetailResponse::fromOrderDetail).toList();
     }
 
-
+    @Override
+    public ResultResponse deleteOrderDetail(Long id) {
+        //get order detail
+        Optional<OrderDetail> orderDetail = orderDetailRepository.findById(id);
+        if (orderDetail.isEmpty()) {
+            throw new RuntimeException("Không Tìm Thấy Order Detail");
+        }
+        //set product status to available
+        Product product = orderDetail.get().getProduct();
+        product.setStatus(Enums.ProductStatus.AVAILABLE);
+        //save product
+        productRepository.save(product);
+        //delete order detail
+        orderDetailRepository.delete(orderDetail.get());
+        return new ResultResponse("Xóa Thành Công");
+    }
 }

@@ -43,4 +43,13 @@ public class OrderDetailController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteOrderDetail(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(orderDetailService.deleteOrderDetail(id));
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
+
 }
