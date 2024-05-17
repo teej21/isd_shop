@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserLoginResponse {
 
+    @JsonProperty("user_id")
+    private Long userId;
 
     @JsonProperty("full_name")
     private String fullName;

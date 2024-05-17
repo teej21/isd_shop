@@ -57,6 +57,7 @@ public class UserService implements IUserService {
             authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             RefreshTokenResponse refreshTokenResponse = jwtTokenUtil.generateTokens(user.getId(), user.getPhoneNumber());
             return UserLoginResponse.builder()
+                .userId(user.getId())
                 .fullName(user.getFullName())
                 .tokens(refreshTokenResponse)
                 .role(user.getRole().toString())
