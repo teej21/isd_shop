@@ -110,7 +110,7 @@
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMTgiLCJ1c2VySWQiOiIxIiwiZXhwIjoxNzE1ODQ4NDIwfQ.pH3MXTVI2qox3pwVV_1HO-Gq2q_-xe9WSWqlWhCcQOU"
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjAxMjM0NTY3ODYiLCJ1c2VySWQiOiI3IiwiZXhwIjoxNzE1OTQ5NjA0fQ.1VzEMbxxjc38Q_w2gWe1bDgpAN3JObQZCOe98pp_nEg"
 							}
 						},
 						"method": "PUT",
@@ -124,12 +124,12 @@
 								}
 							}
 						},
-						"url": "localhost:8686/orders/user/2"
+						"url": "localhost:8686/orders/user/7"
 					},
 					"response": []
 				},
 				{
-					"name": "Comfirm Assifn Order To Employee",
+					"name": "Assign Order To Employee",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -176,6 +176,33 @@
 							}
 						},
 						"url": "localhost:8686/orders/admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Get order by Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjAxMjM0NTY3NzciLCJ1c2VySWQiOiI4IiwiZXhwIjoxNzE2MDQyOTE5fQ.bEYW0zNECj1eS0vmUrxTg3F_AC-rO7-bdUPfNpk7J8c"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/orders/1"
 					},
 					"response": []
 				},
@@ -236,7 +263,7 @@
 			]
 		},
 		{
-			"name": "Orders Details",
+			"name": "Order Detail",
 			"item": [
 				{
 					"name": "Orders Details Add Product To Order",
@@ -244,7 +271,7 @@
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjYyMzE4ODMxMTgiLCJ1c2VySWQiOiIxIiwiZXhwIjoxNzE1ODQ4NDIwfQ.pH3MXTVI2qox3pwVV_1HO-Gq2q_-xe9WSWqlWhCcQOU"
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjAxMjM0NTY3ODYiLCJ1c2VySWQiOiI3IiwiZXhwIjoxNzE1OTQ5NjA0fQ.1VzEMbxxjc38Q_w2gWe1bDgpAN3JObQZCOe98pp_nEg"
 							}
 						},
 						"method": "POST",
@@ -259,6 +286,33 @@
 							}
 						},
 						"url": "localhost:8686/order-details"
+					},
+					"response": []
+				},
+				{
+					"name": "Get List  Order Detail By Order Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjAxMjM0NTY3NzciLCJ1c2VySWQiOiI4IiwiZXhwIjoxNzE2MDQyOTE5fQ.bEYW0zNECj1eS0vmUrxTg3F_AC-rO7-bdUPfNpk7J8c"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8686/orders/1"
 					},
 					"response": []
 				}
@@ -653,7 +707,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n      \"username\": \"122dfs@gmai1l.coem\",\n        \"password\": \"password\"\n}",
+							"raw": "{\n      \"username\": \"0123456777\",\n        \"password\": \"0123456777\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
