@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.isd.shop.components.Utils;
 import org.isd.shop.dtos.ConfirmOrderDTO;
 import org.isd.shop.dtos.UpdateOrderEmployeeDTO;
+import org.isd.shop.dtos.UpdateOrderInfoDTO;
 import org.isd.shop.services.order.IOrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -106,5 +107,22 @@ public class OrderController {
         }
     }
 
-
+    @PutMapping("/employees/update-orders")
+    public ResponseEntity<?> updateOrders(@RequestHeader("Authorization") String authHeader, @RequestBody UpdateOrderInfoDTO updateOrderInfoDTO) {
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                throw new Exception("Token không hợp lệ");
+            }
+            String token = authHeader.substring(7);
+            String name = updateOrderInfoDTO.getName();
+            String address = updateOrderInfoDTO.getAddress();
+            String phone = updateOrderInfoDTO.getPhone();
+            String note = updateOrderInfoDTO.getNote();
+            String status = updateOrderInfoDTO.getStatus();
+            Long orderId = updateOrderInfoDTO.getOrderId();
+            return ResponseEntity.ok(orderService.updateOrders(orderId, name, address, phone, note, status));
+        } catch (Exception e) {
+            return utils.ErrorResponse(e);
+        }
+    }
 }

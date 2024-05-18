@@ -113,7 +113,6 @@ public class OrderService implements IOrderService {
             throw new RuntimeException("ID Nhân Viên Không Tồn Tại");
         }
 
-
         Optional<Order> order = orderRepository.findById(orderId);
         if (order.isEmpty()) {
             throw new RuntimeException("ID Đơn Hàng Không Tồn Tại");
@@ -143,6 +142,24 @@ public class OrderService implements IOrderService {
                 throw new RuntimeException("Không Tìm Thấy Đơn Hàng");
             }
             return orders.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Order updateOrders(Long orderId, String name, String address, String phone, String note, String status) {
+        try {
+            Optional<Order> order = orderRepository.findById(orderId);
+            if (order.isEmpty()) {
+                throw new RuntimeException("ID Đơn Hàng Không Tồn Tại");
+            }
+            order.get().setName(name);
+            order.get().setAddress(address);
+            order.get().setPhoneNumber(phone);
+            order.get().setNote(note);
+            order.get().setStatus(Enums.OrderStatus.valueOf(status));
+            return orderRepository.save(order.get());
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

@@ -43,7 +43,7 @@ public class Enums {
         INIT("INIT"),
         PENDING("PENDING"),
         ASSIGNED("ASSIGNED"),
-        SHIPPED("SHIPPING"),
+        SHIPPING("SHIPPING"),
         DELIVERED("DELIVERED"),
         CANCELLED("CANCELLED");
 
