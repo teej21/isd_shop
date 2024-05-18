@@ -49,7 +49,7 @@ public class OrderController {
     @GetMapping("/employees/{employeeId}")
     public ResponseEntity<?> getAssignedOrder(@PathVariable Long employeeId, @RequestHeader("Authorization") String authHeader) {
         try {
-            return ResponseEntity.ok(orderService.getAssignedOrder(authHeader, employeeId));
+            return ResponseEntity.ok(orderService.getAssignedOrders(authHeader, employeeId));
         } catch (Exception e) {
             return utils.ErrorResponse(e);
         }

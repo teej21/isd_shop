@@ -40,7 +40,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/products/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE")
                     .requestMatchers("/categories/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE")
                     .requestMatchers("/orders/admin/**").hasAnyRole("ADMIN", "MANAGER")
-                    .requestMatchers("/orders/employees/**").hasRole("EMPLOYEE")
+                    .requestMatchers("/orders/employees/**").hasAnyRole("EMPLOYEE", "ADMIN", "MANAGER")
                     .requestMatchers("/orders/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER")
                     .requestMatchers("/order-details/**").hasAnyRole("ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER")
                     .anyRequest().authenticated()

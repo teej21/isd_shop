@@ -22,6 +22,6 @@ public interface IOrderService {
 
     Order updateEmployee(Long employeeId, Long orderId);
 
-    List<Order> getAssignedOrder(String token, Long employeeId);
+    List<Order> getAssignedOrders(String token, Long employeeId);
 }
 

@@ -125,13 +125,13 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> getAssignedOrder(String token, Long employeeId) {
+    public List<Order> getAssignedOrders(String token, Long employeeId) {
         try {
             if (token == null || !token.startsWith("Bearer ")) {
                 throw new RuntimeException("Token Không Hợp Lệ");
             }
             String extractedToken = token.substring(7);
-            if (!isValidUserIdByToken(extractedToken, employeeId)) {
+            if (!isValidUserIdByToken(extractedToken, employeeId) && !isAdminOrManager(extractedToken)) {
                 throw new RuntimeException("Bạn Chỉ Có Thể Xem Đơn Hàng Được Giao");
             }
             Optional<User> employee = userRepository.findById(employeeId);
@@ -144,12 +144,18 @@ public class OrderService implements IOrderService {
             }
             return orders.get();
         } catch (Exception e) {
-            throw new RuntimeException("Không Tìm Thấy Đơn Hàng");
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     private boolean isValidUserIdByToken(String token, Long userId) {
         String extractedUserId = jwtTokenUtil.extractClaim(token, "userId");
         return extractedUserId.equals(userId.toString());
+    }
+
+    private boolean isAdminOrManager(String token) {
+        String extractedUserId = jwtTokenUtil.extractClaim(token, "userId");
+        Optional<User> user = userRepository.findById(Long.parseLong(extractedUserId));
+        return user.filter(value -> value.getRole().equals(Enums.Role.ADMIN) || value.getRole().equals(Enums.Role.MANAGER)).isPresent();
     }
 }
