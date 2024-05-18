@@ -1,5 +1,6 @@
 package org.isd.shop.services.orderDetail;
 
+import org.isd.shop.enums.Enums;
 import org.isd.shop.responses.OrderDetail.OrderDetailResponse;
 import org.isd.shop.responses.common.ResultResponse;
 
@@ -14,4 +15,5 @@ public interface IOrderDetailService {
     List<OrderDetailResponse> getOrderDetailsByOrderId(Long orderId);
 
     ResultResponse deleteOrderDetail(Long id);
+
 }

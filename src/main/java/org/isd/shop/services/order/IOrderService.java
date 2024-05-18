@@ -2,6 +2,7 @@ package org.isd.shop.services.order;
 
 import org.isd.shop.entities.Order;
 import org.isd.shop.enums.Enums;
+import org.isd.shop.responses.common.ResultResponse;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public interface IOrderService {
 
     List<Order> getAssignedOrders(String token, Long employeeId);
 
-    Order updateOrders( Long orderId, String name, String address, String phone, String note, String status);
+    ResultResponse updateOrders(Long orderId, String name, String address, String phone, String note, String status);
 }
+
 

@@ -3,10 +3,16 @@ package org.isd.shop.services.order;
 import lombok.RequiredArgsConstructor;
 import org.isd.shop.components.JwtTokenUtil;
 import org.isd.shop.entities.Order;
+import org.isd.shop.entities.OrderDetail;
+import org.isd.shop.entities.Product;
 import org.isd.shop.entities.User;
 import org.isd.shop.enums.Enums;
+import org.isd.shop.repositories.OrderDetailReposity;
 import org.isd.shop.repositories.OrderRepository;
+import org.isd.shop.repositories.ProductRepository;
 import org.isd.shop.repositories.UserRepository;
+import org.isd.shop.responses.common.ResultResponse;
+import org.isd.shop.services.orderDetail.OrderDetailService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +24,8 @@ public class OrderService implements IOrderService {
     private final JwtTokenUtil jwtTokenUtil;
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
+    private final OrderDetailReposity orderDetailRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public List<Order> getAllOrders() {
@@ -148,18 +156,23 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order updateOrders(Long orderId, String name, String address, String phone, String note, String status) {
+    public ResultResponse updateOrders(Long orderId, String name, String address, String phone, String note, String status) {
         try {
-            Optional<Order> order = orderRepository.findById(orderId);
-            if (order.isEmpty()) {
+            Optional<Order> orderOptional = orderRepository.findById(orderId);
+            if (orderOptional.isEmpty()) {
                 throw new RuntimeException("ID Đơn Hàng Không Tồn Tại");
             }
-            order.get().setName(name);
-            order.get().setAddress(address);
-            order.get().setPhoneNumber(phone);
-            order.get().setNote(note);
-            order.get().setStatus(Enums.OrderStatus.valueOf(status));
-            return orderRepository.save(order.get());
+            Order order = orderOptional.get();
+            order.setName(name);
+            order.setAddress(address);
+            order.setPhoneNumber(phone);
+            order.setNote(note);
+            //if status change, call method update product
+            if (!order.getStatus().equals(Enums.OrderStatus.valueOf(status))) {
+                order.setStatus(Enums.OrderStatus.valueOf(status));
+                updateProductStatus(orderId, Enums.OrderStatus.valueOf(status));
+            }
+            return new ResultResponse("Cập Nhật Đơn Hàng Thành Công");
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -174,5 +187,31 @@ public class OrderService implements IOrderService {
         String extractedUserId = jwtTokenUtil.extractClaim(token, "userId");
         Optional<User> user = userRepository.findById(Long.parseLong(extractedUserId));
         return user.filter(value -> value.getRole().equals(Enums.Role.ADMIN) || value.getRole().equals(Enums.Role.MANAGER)).isPresent();
+    }
+
+    public void updateProductStatus(Long orderId, Enums.OrderStatus orderStatus) {
+        Optional<List<OrderDetail>> orderDetailListOptional = orderDetailRepository.findByOrder_Id(orderId);
+        if (orderDetailListOptional.isEmpty()) {
+            throw new RuntimeException("Không Tìm Thấy Order Detail");
+        }
+
+        List<OrderDetail> orderDetailList = orderDetailListOptional.get();
+        for (OrderDetail orderDetail : orderDetailList) {
+            Product product = orderDetail.getProduct();
+            switch (orderStatus) {
+                case INIT, PENDING, SHIPPING, ASSIGNED:
+                    product.setStatus(Enums.ProductStatus.ORDERED);
+                    break;
+                case DELIVERED:
+                    product.setStatus(Enums.ProductStatus.STOCKOUT);
+                    break;
+                case CANCELLED:
+                    product.setStatus(Enums.ProductStatus.AVAILABLE);
+                    break;
+                default:
+                    throw new RuntimeException("Trạng Thái Đơn Hàng Không Hợp Lệ");
+            }
+            productRepository.save(product);
+        }
     }
 }

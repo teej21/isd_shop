@@ -11,4 +11,5 @@ public interface OrderDetailReposity extends JpaRepository<OrderDetail, Long> {
     List<OrderDetail> findByOrder(Order order);
 
 
+    Optional<List<OrderDetail>> findByOrder_Id(Long orderId);
 }
