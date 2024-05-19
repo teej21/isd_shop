@@ -131,16 +131,31 @@ public class UserService implements IUserService {
     @Override
     public User updateUserById(Long id, String fullName, String email, String phoneNumber, String password, String gender, String role, boolean active, Date dateOfBirth, String address) {
         try {
+            validateUser(role, gender, email, phoneNumber);
             Optional<User> userOptional = userRepository.findById(id);
             if (userOptional.isEmpty()) {
                 throw new RuntimeException("Không tìm thấy người dùng. Vui lòng thử lại.");
             }
             User user = userOptional.get();
             validateUser(role, gender, email, phoneNumber);
+            if (!email.equals(user.getEmail())) {
+                userOptional = userRepository.findByEmail(email);
+                if (userOptional.isPresent()) {
+                    throw new Exception("Email đã được sử dụng để đăng ký. Vui lòng sử dụng email khác.");
+                }
+            }
+            if (!phoneNumber.equals(user.getPhoneNumber())) {
+                userOptional = userRepository.findByPhoneNumber(phoneNumber);
+                if (userOptional.isPresent()) {
+                    throw new Exception("Số điện thoại đã được sử dụng để đăng ký. Vui lòng sử dụng số điện thoại khác.");
+                }
+            }
             user.setFullName(fullName);
             user.setEmail(email);
             user.setPhoneNumber(phoneNumber);
-            user.setPassword(passwordEncoder.encode(password));
+            if (password != null) {
+                user.setPassword(passwordEncoder.encode(password));
+            }
             user.setGender(Enums.Gender.valueOf(gender));
             user.setRole(Enums.Role.valueOf(role));
             user.setActive(active);

@@ -33,7 +33,6 @@ public class UserDTO {
     @JsonProperty("gender")
     private String gender;
 
-    @NotEmpty(message = "Mật khẩu không được để trống")
     @JsonProperty("password")
     private String password;
 
