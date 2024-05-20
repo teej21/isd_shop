@@ -27,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderDetailService implements IOrderDetailService {
     private final OrderDetailReposity orderDetailRepository;
+    private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final IOrderService orderService;
     private final IProductService productService;
@@ -86,6 +87,11 @@ public class OrderDetailService implements IOrderDetailService {
         if (orderDetail.isEmpty()) {
             throw new RuntimeException("Không Tìm Thấy Order Detail");
         }
+        //find order by order detail, if order status is not init, throw exception
+        Order order = orderDetail.get().getOrder();
+        if (!order.getStatus().equals(Enums.OrderStatus.INIT)) {
+            throw new RuntimeException("Không Thể Xóa Order Detail");
+        }
         //set product status to available
         Product product = orderDetail.get().getProduct();
         product.setStatus(Enums.ProductStatus.AVAILABLE);
@@ -93,6 +99,11 @@ public class OrderDetailService implements IOrderDetailService {
         productRepository.save(product);
         //delete order detail
         orderDetailRepository.delete(orderDetail.get());
+        //check if order detail is the last order detail of order, delete order
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
+        if (orderDetails.isEmpty()) {
+            orderRepository.delete(order);
+        }
         return new ResultResponse("Xóa Thành Công");
     }
 
