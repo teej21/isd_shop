@@ -61,8 +61,10 @@ public class OrderService implements IOrderService {
         if (user.isEmpty()) {
             throw new RuntimeException("ID Người Dùng Không Tồn Tại");
         }
-        Optional<List<Order>> orders = orderRepository.findByUser(user.get());
-        return orders.get();
+        Optional<List<Order>> orders = orderRepository.findByUserAndStatus(user.get(), Enums.OrderStatus.INIT);
+        //return order has status INIT
+        return orders.orElseGet(List::of);
+
     }
 
     @Override
